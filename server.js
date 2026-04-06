@@ -4,11 +4,17 @@ const port = 3000
 const path = require('path')
 const pool = require('./db/connection');
 
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
 // Configurar motor de vistas
 app.set('view engine', 'ejs');
 
-// Carpeta de vistas (opcional si usas /views)
 app.set('views', path.join(__dirname, 'views'));
+
+app.use('/categorias', require('./routes/categoria_gasto_route'));
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
