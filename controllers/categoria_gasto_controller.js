@@ -57,3 +57,27 @@ exports.llamarCategoriaId = async (req, res) => {
         res.status(500).send('Error del servidor al llamar por ID')
     }
 }
+
+exports.eliminarCategoriaId = async (req,res) => {
+
+
+    try{
+
+       const { id } = req.params;
+
+        const idNum = Number(id);
+
+        if (!id || isNaN(idNum)) {
+            return res.status(400).send('Error: ID inválido');
+        }
+
+        const categoria_eliminar = await categoriaModel.eliminar(id);
+
+        return res.redirect('/categorias')
+
+    }catch(error) {
+        console.error(error);
+        return res.status(500).send('Error del sistema al borrar Categoria')
+    }
+
+}
