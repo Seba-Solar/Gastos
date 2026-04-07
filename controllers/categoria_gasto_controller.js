@@ -1,3 +1,4 @@
+const { render } = require('ejs');
 const categoriaModel = require('../models/categoria_gasto_model');
 
 exports.listar = async (req, res) => {
@@ -25,6 +26,24 @@ exports.actualizarCategoria = async (req, res) => {
         res.status(500).send('Error al Actualizar la categoria del lado del servidor')
     }
 
+}
+
+exports.crearCategoria = async (req,res ) => {
+    try{
+        const { nombreCategoria } = req.body;
+        
+        if (typeof nombreCategoria !== 'string' || nombreCategoria.trim() === '') {
+            return res.status(400).send('Error: No se puede crear categoria sin nombre')
+        }
+
+        const crearCategoria = await categoriaModel.crear(nombreCategoria);
+
+        return res.redirect('/categorias');
+        
+    }catch(error){
+        console.error(error);
+        return res.status(500).send('Error del servidor al llamar crear Categoria')
+    }
 }
 
 exports.llamarCategoriaId = async (req, res) => {
