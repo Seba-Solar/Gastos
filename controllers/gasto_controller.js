@@ -1,0 +1,108 @@
+const gastoModel = require('../models/gasto_model.js');
+
+exports.crearGasto = async (req, res) => {
+    try {
+        const { idMetodoPago, idCategoriaGasto, nombreGasto, descripcionGasto, montoGasto } = req.body;
+
+        await gastoModel.crearGasto(
+            nombreGasto,
+            descripcionGasto,
+            montoGasto,
+            idCategoriaGasto,
+            idMetodoPago
+        );
+
+        return res.status(200).send('Gasto creado con exito');
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Problemas con el servidor para crear el Gasto: ' + error.message);
+    }
+};
+
+exports.obtenerPorId = async (req,res) => {
+
+    try{
+        const { id } = req.params;
+
+        const objetoID = await gastoModel.obtenerPorId(id);
+
+        return res.json({objetoID});
+
+    }catch(error){
+        return res.status(500).send('Error del servidor al traer registro por ID')
+    }
+}
+
+exports.obtenerTodos = async (req,res) => {
+
+    try{
+
+        const objetoGastos = await gastoModel.obtenerTodas();
+
+        return res.json({objetoGastos});
+
+    }catch(error){
+        return res.status(500).send('Error del servidor para llamar todos los objetos')
+    }
+}
+
+exports.eliminarGasto = async (req,res) => {
+    try{
+
+        const { id } = req.params;
+        let idNumber = Number(id);
+
+        if (!id || isNaN(idNumber)) {
+            return res.status(400).send('Error: ID inválido');
+        }
+
+        const eliminarGasto = await gastoModel.eliminar(id);
+
+        return res.redirect('/gastos');
+
+    }catch(error){
+        return res.status(500).send('Error del servidor para eliminar el gasto')
+    }
+}
+
+exports.actualizarGasto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const idNum = Number(id);
+
+        const { idMetodoPago, idCategoriaGasto, nombreGasto, descripcionGasto, montoGasto } = req.body;
+
+        if (!id || isNaN(idNum)) {
+            return res.status(400).send('Error en el ID');
+        }
+
+        const camposActualizar = {};
+
+        if (idMetodoPago !== undefined && idMetodoPago.trim() !== '') {
+            camposActualizar.idMetodoPago = idMetodoPago.trim();
+        }
+
+        if (idCategoriaGasto !== undefined && idCategoriaGasto.trim() !== '') {
+            camposActualizar.idCategoriaGasto = idCategoriaGasto.trim();
+        }
+
+        if (nombreGasto !== undefined && nombreGasto.trim() !== '') {
+            camposActualizar.nombreGasto = nombreGasto.trim();
+        }
+
+        if (descripcionGasto !== undefined && descripcionGasto.trim() !== '') {
+            camposActualizar.descripcionGasto = descripcionGasto;
+        }
+
+        if (montoGasto !== undefined && !Number.isNaN(Number(montoGasto))) {
+            camposActualizar.montoGasto = Number(montoGasto);
+        }
+        await gastoModel.actualizar(idNum, camposActualizar);
+
+        return res.redirect('/gastos');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Error del servidor al actualizar Gasto');
+    }
+};
