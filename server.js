@@ -17,8 +17,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/categorias', require('./routes/categoria_gasto_route'));
 app.use('/usuarios' , require('./routes/usuario_route'));
 app.use('/gastos' , require('./routes/gasto_route'));
+app.use('/metodo_pago' , require('./routes/metodo_pago_route'));
 
-app.get('/', (req, res) => {
+app.get('/hello_world', (req, res) => {
   res.send('Hello World!')
 })
 
@@ -26,6 +27,7 @@ app.listen(port, () => {
   console.log(`Gasto App Puerto: http://localhost:${port}`)
 })
 
+//Solo para cargar el template, es temporal
 app.get('/gastos',(req,res)=> {
   const gastos = [];
   const totalGastos = 0;
