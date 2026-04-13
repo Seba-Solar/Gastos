@@ -1,4 +1,6 @@
 const gastoModel = require('../models/gasto_model.js');
+const categoriaModel = require('../models/categoria_gasto_model.js');
+const metodoModel = require('../models/metodo_pago_model.js');
 
 exports.crearGasto = async (req, res) => {
     try {
@@ -20,6 +22,17 @@ exports.crearGasto = async (req, res) => {
     }
 };
 
+exports.crearGastoView = async (req,res) => {
+    try{
+        const categoria = await categoriaModel.obtenerTodas();
+        const metodo = await metodoModel.obtenerTodas();
+
+        res.render('gastos_crear',{categoria,metodo})
+    }catch(error){
+        res.status(500).send('Error: '+error.message);
+    }
+
+}
 exports.obtenerPorId = async (req,res) => {
 
     try{
@@ -40,8 +53,8 @@ exports.obtenerTodos = async (req,res) => {
 
         const objetoGastos = await gastoModel.obtenerTodas();
 
-        return res.json({objetoGastos});
-
+        return res.render('gasto', { objetoGastos });
+        //return res.json({});
     }catch(error){
         return res.status(500).send('Error del servidor para llamar todos los objetos')
     }
