@@ -33,7 +33,7 @@
           <td><%= g.descripcionGasto %></td>
           <td>$<%= g.montoGasto %></td>
           <td>
-            <form action="actualizar_gasto/<%= g.idGasto %>" method="POST">
+            <form action="/gastos/actualizar_gasto/<%= g.idGasto %>" method="POST">
               <button class="btn btn-warning btn-sm">Editar</button>
             </form>
             <form action="/gastos/eliminar/<%= g.idGasto %>" method="POST" style="display:inline;">
