@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasto Actualizar</title>
+</head>
+<body>
+    <%- include('../views/partials/navbar') %>
+
+    <form action="/gastos/actualizar/<%= gasto.idGasto %>" method="POST" >
+        <input class="form-control mb-2" name="nombreGasto" value="<%= gasto.nombreGasto %>" required>
+    
+        <input class="form-control mb-2" name="descripcionGasto" value="<%= gasto.descripcionGasto %>">
+        <input class="form-control mb-2" name="montoGasto" type="number" value="<%= gasto.montoGasto %>" required>
+    
+        <select class="form-select mb-2" name="idCategoriaGasto" required>
+            <option value="">Selecciona categoría</option>
+            <% categoria.forEach(c => { %>
+                <option 
+                    value="<%= c.idCategoria_Gasto %>"
+                    <%= c.idCategoria_Gasto == gasto.idCategoriaGasto ? 'selected' : '' %>
+                >
+                    <%= c.nombreCategoria %>
+                </option>
+            <% }) %>
+        </select>
+        <select class="form-select mb-2" name="idMetodoPago" required>
+        <option value="">Selecciona método</option>
+        <% metodo.forEach(m => { %>
+            <option value="<%= m.idmetodo_pago %>"
+                <%= m.idmetodo_pago == gasto.idMetodoPago ? 'selected' : '' %>
+            >
+                <%= m.tipoPago %>
+            </option>
+        <% }) %>
+        </select>
+        <button class="btn btn-success btn-sm">Actualizar</button>
+    </form>
+    
+</body>
+</html>

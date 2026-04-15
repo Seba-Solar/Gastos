@@ -33,6 +33,22 @@ exports.crearGastoView = async (req,res) => {
     }
 
 }
+
+exports.actualizarGastoView = async (req, res) => {
+  try {
+    const { idGasto } = req.params;
+    const gasto = await gastoModel.obtenerPorId(idGasto);
+    const categoria = await categoriaModel.obtenerTodas();
+    const metodo = await metodoModel.obtenerTodas();
+    return res.render('gastos_actualizar',{gasto,categoria,metodo})
+
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    });
+  }
+};
+
 exports.obtenerPorId = async (req,res) => {
 
     try{

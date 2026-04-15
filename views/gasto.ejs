@@ -33,8 +33,9 @@
           <td><%= g.descripcionGasto %></td>
           <td>$<%= g.montoGasto %></td>
           <td>
-            <a href="/gastos/editar/<%= g.idGasto %>" class="btn btn-warning btn-sm">Editar</a>
-
+            <form action="actualizar_gasto/<%= g.idGasto %>" method="POST">
+              <button class="btn btn-warning btn-sm">Editar</button>
+            </form>
             <form action="/gastos/eliminar/<%= g.idGasto %>" method="POST" style="display:inline;">
               <button class="btn btn-danger btn-sm">Eliminar</button>
             </form>
