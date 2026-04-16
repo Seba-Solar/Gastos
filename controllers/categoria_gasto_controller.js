@@ -46,6 +46,34 @@ exports.crearCategoria = async (req,res ) => {
     }
 }
 
+exports.categoriaView = async (req, res) => {
+
+    try{
+
+        const categorias = await categoriaModel.obtenerTodas();
+
+        return res.render('categoria', {categorias})
+    }catch(error){
+        return res.status(500).send('Error: '+error.message);
+    }
+
+
+}
+
+exports.categoriaActualizarView = async (req , res) => {
+
+    try{
+        const { id } = req.params;
+        const categorias = await categoriaModel.obtenerPorId(id);
+
+        return res.render('categoria_actualizar',{categorias});
+    }catch(error){
+
+        return res.status(500).send('Error: '+error.message);
+    }
+
+}
+
 exports.llamarCategoriaId = async (req, res) => {
 
     try{
