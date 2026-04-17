@@ -7,5 +7,6 @@ router.post('/llamar/:id',categoriaController.llamarCategoriaId);
 router.post('/editar/:id', categoriaController.categoriaActualizarView);
 router.post('/editar/categoria/:id', categoriaController.actualizarCategoria);
 router.post('/crear', categoriaController.crearCategoria);
+router.get('/crear_categoria', categoriaController.categoriaCrearView);
 router.post('/eliminar/:id',categoriaController.eliminarCategoriaId);
 module.exports = router;

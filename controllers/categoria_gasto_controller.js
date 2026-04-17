@@ -74,6 +74,17 @@ exports.categoriaActualizarView = async (req , res) => {
 
 }
 
+exports.categoriaCrearView = async (req , res) => {
+
+    try{
+        return res.render('categoria_crear');
+    }catch(error){
+
+        return res.status(500).send('Error: '+error.message);
+    }
+
+}
+
 exports.llamarCategoriaId = async (req, res) => {
 
     try{
