@@ -14,7 +14,7 @@ exports.crearGasto = async (req, res) => {
             idMetodoPago
         );
 
-        return res.status(200).send('Gasto creado con exito');
+        return res.redirect('/gastos');
 
     } catch (error) {
         console.error(error);
